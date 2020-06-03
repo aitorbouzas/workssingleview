@@ -5,6 +5,7 @@ flask-migrate
 flask-restx
 flask-sqlalchemy
 flask-testing
+psycopg2
 pytest
 pytest-cov
 pytest-html

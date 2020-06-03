@@ -1,12 +1,12 @@
 import logging
 import os
 
-DEBUG = os.getenv("ENVIRONMENT") == "DEV"
+DEBUG = os.getenv("ENVIRONMENT") == "local"
 HOST = os.getenv("APPLICATION_HOST")
 PORT = int(os.getenv("APPLICATION_PORT", "5000"))
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-DB_CONTAINER = os.getenv("APPLICATION_DB_CONTAINER", "db")
+DB_CONTAINER = os.getenv("APPLICATION_DB_CONTAINER", "postgres")
 POSTGRES = {
     "user": os.getenv("APPLICATION_POSTGRES_USER", "postgres"),
     "pw": os.getenv("APPLICATION_POSTGRES_PW", ""),

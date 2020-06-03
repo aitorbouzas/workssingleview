@@ -2,20 +2,24 @@
 
 # test managing
 test:
-	docker-compose run --rm $(SERVICE_NAME)-app pytest -v tests/
+	docker-compose run --rm server pytest -v tests/
 
 test-coverage:
-	docker-compose run --rm $(SERVICE_NAME)-app pytest -v --cov --cov-report term --cov-report html --html=pytest_report.html --self-contained-html --junitxml=pytest_junit_report.xml tests/
+	docker-compose run --rm server pytest -v --cov --cov-report term --cov-report html --html=pytest_report.html --self-contained-html --junitxml=pytest_junit_report.xml tests/
 
 # database managing
 db-upgrade:
-	docker-compose run --rm $(SERVICE_NAME)-app flask db upgrade;
+	docker-compose run --rm server flask db upgrade;
 
 db-downgrade:
-	docker-compose run --rm $(SERVICE_NAME)-app flask db downgrade;
+	docker-compose run --rm server flask db downgrade;
 
 db-migrate:
-	docker-compose run --rm $(SERVICE_NAME)-app flask db migrate;
+	docker-compose run --rm server flask db migrate;
+	$(MAKE) chown
+
+db-init:
+	docker-compose run --rm server flask db init;
 	$(MAKE) chown
 
 # server managing
@@ -31,13 +35,19 @@ start:
 startd:
 	docker-compose up -d server
 
-# utils
+start-db:
+	docker-compose up -d postgres
+
+stop-db:
+	docker-compose stop postgres
+
 stop:
 	docker-compose stop
 
 down:
 	docker-compose down
 
+# utils
 requirements:
 	docker-compose run --rm server pip-compile -U -o requirements.txt requirements.in
 	$(MAKE) chown
