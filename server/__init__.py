@@ -48,4 +48,4 @@ def register_apis(app):
     :param app:
     :return: None
     """
-    # app.register_blueprint(booking_api)
+    # app.register_blueprint(work_api)
