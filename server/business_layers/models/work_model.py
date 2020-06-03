@@ -1,9 +1,8 @@
 from sqlalchemy.orm import relationship
 
 from server.core import db
-from server.models.base_model import BaseModel
-from server.models.provider_model import ProviderModel
-from server.models.work_contributor_model import WorkContributorModel
+from server.business_layers.models.base_model import BaseModel
+from server.business_layers.models.provider_model import ProviderModel
 
 
 class WorkProviderModel(BaseModel):
@@ -18,6 +17,6 @@ class WorkModel(BaseModel):
 
     iswc = db.Column(db.String(32), unique=True, index=True)
     title = db.Column(db.String(128))
+    contributors = db.Column(db.String(256))
 
-    contributors = relationship(WorkContributorModel, lazy="joined")
     providers = relationship(ProviderModel, secondary=WorkProviderModel, lazy="joined")

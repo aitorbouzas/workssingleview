@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy.orm.collections import InstrumentedList
 
 from server.core import db
-from server.models import persistence
+from server.business_layers.models import persistence
 from server.util.util import get_random_uuid
 
 

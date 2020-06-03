@@ -1,7 +1,7 @@
 from flask import Flask
 
 from server import config
-from server import models
+from server.business_layers import models
 from server.core import cache, db, migrate, cors
 
 
