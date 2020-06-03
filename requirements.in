@@ -1,0 +1,11 @@
+flask
+flask-caching
+flask-cors
+flask-migrate
+flask-restx
+flask-sqlalchemy
+flask-testing
+pytest
+pytest-cov
+pytest-html
+sqlalchemy-utils
