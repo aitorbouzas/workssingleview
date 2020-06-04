@@ -1,5 +1,4 @@
 from server.business_layers.domains.base import BaseDomain
-from server.business_layers.domains.provider import Provider
 
 
 class Work(BaseDomain):
@@ -15,7 +14,7 @@ class Work(BaseDomain):
         self.set_providers(providers)
 
     def add_provider(self, provider):
-        p = Provider.from_dict(provider)
+        p = WorkProvider.from_dict(provider)
         self.providers.append(p)
         return p
 
@@ -23,3 +22,15 @@ class Work(BaseDomain):
         self.providers = []
         for p in providers or []:
             self.add_provider(p)
+
+
+class WorkProvider(BaseDomain):
+
+    def __init__(self, id, work_id, provider_id, provider_name, provider_reference, **kwargs):
+        super().__init__(**kwargs)
+
+        self.id = id
+        self.work_id = work_id
+        self.provider_id = provider_id
+        self.provider_name = provider_name
+        self.provider_reference = provider_reference

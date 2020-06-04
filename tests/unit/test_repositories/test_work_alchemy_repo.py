@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 from server.business_layers.repositories.work_alchemy_repository import WorkAlchemyRepository
-from tests.fixtures.json_collection import test_work
+from tests.fixtures.json_collection import test_work, test_work_provider
 
 
 class TestWorkAlchemyRepo(unittest.TestCase):
@@ -23,8 +23,12 @@ class TestWorkAlchemyRepo(unittest.TestCase):
         self.provider_model = mock.MagicMock()
         self.provider_model.get = mock.MagicMock(return_value=None)
 
+        self.work_provider_model = mock.MagicMock()
+        self.work_provider_model.create = mock.MagicMock(return_value=test_work_provider)
+
         self.repo = WorkAlchemyRepository(
             self.work_model,
+            self.work_provider_model,
             self.provider_model,
         )
 
@@ -52,3 +56,7 @@ class TestWorkAlchemyRepo(unittest.TestCase):
         work = self.repo.first({'iswc': '1234'})
 
         self.assertEqual(work.to_dict(), test_work)
+
+    def test_add_provider(self):
+        work_provider = self.repo.add_provider(test_work_provider)
+        self.assertEqual(work_provider, test_work_provider)

@@ -16,6 +16,7 @@ flask-restx==0.2.0        # via -r requirements.in
 flask-sqlalchemy==2.4.3   # via -r requirements.in, flask-migrate
 flask-testing==0.8.0      # via -r requirements.in
 flask==1.1.2              # via -r requirements.in, flask-caching, flask-cors, flask-migrate, flask-restx, flask-sqlalchemy, flask-testing
+fuzzywuzzy==0.18.0        # via -r requirements.in
 importlib-metadata==1.6.0  # via jsonschema, pluggy, pytest
 itsdangerous==1.1.0       # via flask
 jinja2==2.11.2            # via flask

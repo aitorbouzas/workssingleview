@@ -3,8 +3,9 @@ from server.business_layers.repositories.abstract_base_repository import Abstrac
 
 
 class WorkAlchemyRepository(AbstractBaseRepository):
-    def __init__(self, work_model, provider_model):
+    def __init__(self, work_model, work_provider_model, provider_model):
         self.work_model = work_model
+        self.work_provider_model = work_provider_model
         self.provider_model = provider_model
 
     def search(self, filters, deleted=None):
@@ -22,21 +23,8 @@ class WorkAlchemyRepository(AbstractBaseRepository):
         return search[0] if search else None
 
     def create(self, data):
-        providers = []
-        if data.get('providers'):
-            providers = data.get('providers')
-            del data['providers']
-
         work = self.work_model(**data)
-
-        for p in providers:
-            provider = self.provider_model.get(p.get('id'))
-            if not provider:
-                provider = self.provider_model.create(to_dict=False, **p)
-            work.providers.append(provider)
-
         work.persist()
-
         new_work = Work.from_dict(work.to_dict())
         return new_work
 
@@ -50,3 +38,7 @@ class WorkAlchemyRepository(AbstractBaseRepository):
     def delete(self, id):
         deleted = self.work_model.delete(id)
         return deleted
+
+    def add_provider(self, data):
+        work_provider = self.work_provider_model.create(**data)
+        return work_provider
