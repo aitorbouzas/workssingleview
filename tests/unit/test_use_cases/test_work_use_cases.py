@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 from server.business_layers.domains.work import Work
-from server.business_layers.use_cases.work import PostWork, UpdateWork
+from server.business_layers.use_cases.work import PostWork, UpdateWork, GetWork
 from tests.fixtures.json_collection import test_work, test_work_provider
 
 
@@ -27,6 +27,11 @@ class TestWorkUseCase(unittest.TestCase):
         self.provider_repo.search = mock.MagicMock(return_value=[provider_object])
         self.provider_repo.first = mock.MagicMock(return_value=None)
         self.provider_repo.create = mock.MagicMock(return_value=provider_object)
+
+    def test_get_work(self):
+        get_work_use_case = GetWork(self.work_repo, ['1234'])
+        work = get_work_use_case.execute()
+        self.assertEqual(work[0].to_dict(), test_work)
 
     def test_post_work(self):
         # Post already created one

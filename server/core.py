@@ -5,5 +5,5 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 cache = Cache()
-migrate = Migrate()
+migrate = Migrate(directory='/var/server/migrations')
 cors = CORS()

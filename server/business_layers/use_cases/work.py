@@ -3,6 +3,23 @@ from fuzzywuzzy import fuzz
 LEV_RATIO = 90
 
 
+class GetWork:
+    """
+    GetWork for querying purposes
+    """
+    def __init__(self, work_repo, iswc_list):
+        self.work_repo = work_repo
+        self.iswc_list = iswc_list
+
+    def execute(self):
+        works = []
+        for i in self.iswc_list:
+            w = self.work_repo.first({'iswc': i})
+            if w:
+                works.append(w)
+        return works
+
+
 class PostWork:
     """
     PostWork will take into account if the work exists or not, in case it does it will call UpdateWork
