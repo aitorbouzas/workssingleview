@@ -67,7 +67,6 @@ class TestWorkUseCase(unittest.TestCase):
             'id': 2,
             'work_id': 1,
             'provider_id': 2,
-            'provider_name': 'Sony',
             'provider_reference': 3,
         }
         provider_object = mock.Mock()

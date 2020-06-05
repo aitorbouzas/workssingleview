@@ -3,6 +3,7 @@ from flask import Flask
 from server import config
 from server.business_layers import models
 from server.business_layers.controllers.work.v1_0.api_work_controller import work_api
+from server.business_layers.models import persistence
 from server.core import cache, db, migrate, cors
 
 
@@ -28,6 +29,8 @@ def create_app(package_name=None, register_app_apis=True, testing=False):
         # Register APIs
         register_apis(app)
 
+    app.teardown_request(shutdown_session)
+
     return app
 
 
@@ -50,3 +53,7 @@ def register_apis(app):
     :return: None
     """
     app.register_blueprint(work_api)
+
+
+def shutdown_session(exception=None):
+    persistence.commit()

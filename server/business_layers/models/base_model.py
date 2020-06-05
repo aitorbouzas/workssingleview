@@ -4,7 +4,6 @@ from sqlalchemy.orm.collections import InstrumentedList
 
 from server.core import db
 from server.business_layers.models import persistence
-from server.util.util import get_random_uuid
 
 
 class BaseModel(db.Model):
@@ -16,9 +15,6 @@ class BaseModel(db.Model):
     deleted_timestamp = db.Column(db.DateTime, nullable=True)
 
     def __init__(self, **kwargs):
-        if hasattr(self, 'uuid') and 'uuid' not in kwargs:
-            uuid = get_random_uuid()
-            kwargs.update({'uuid': uuid})
         super().__init__(**kwargs)
 
     def to_dict(self, relations=False):

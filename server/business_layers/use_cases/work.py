@@ -1,6 +1,6 @@
 from fuzzywuzzy import fuzz
 
-LEV_RATIO = 90
+LEV_RATIO = 80
 
 
 class GetWork:
@@ -40,9 +40,9 @@ class PostWork:
             work = self.work_repo.create(self.data_dict)
 
             for p in providers:
-                provider = self.provider_repo.first({'name': p.get('name')})
+                provider = self.provider_repo.first({'name': p.get('source')})
                 if not provider:
-                    provider = self.provider_repo.create({'name': p.get('name')})
+                    provider = self.provider_repo.create({'name': p.get('source')})
 
                 work_provider_dict = {
                     'provider_id': provider.id,
@@ -101,19 +101,19 @@ class UpdateWork:
 
         # Add providers
         for p in self.data_dict.get('providers'):
-            provider = self.provider_repo.first({'name': p.get('name')})
+            provider = self.provider_repo.first({'name': p.get('source')})
             if not provider:
-                provider = self.provider_repo.create({'name': p.get('name')})
+                provider = self.provider_repo.create({'name': p.get('source')})
 
-            if (provider.id, p.get('id')) not in [(prov.provider_id, prov.provider_reference) for prov in work.providers]:
+            if (provider.id, int(p.get('id'))) not in [(prov.provider_id, prov.provider_reference) for prov in work.providers]:
                 work_provider_dict = {
                     'provider_id': provider.id,
-                    'provider_name': provider.name,
                     'work_id': work.id,
                     'provider_reference': p.get('id'),
                 }
-                provider = self.work_repo.add_provider(work_provider_dict)
-                work.add_provider(provider)
+                new_provider = self.work_repo.add_provider(work_provider_dict)
+                new_provider['provider_name'] = provider.name
+                work.add_provider(new_provider)
 
         self.work_repo.update(work.id, update_dict)
 
