@@ -80,3 +80,9 @@ class TestApiWork_v1_0(TestCase):
         )
         self.assert200(response)
         self.assertEqual(len(response.json), 4)
+
+    def test_get_csv_work(self):
+        iswcs = '1234'
+        url = self.api_version + f'/work/{iswcs}/csv'
+        response = self.client.get(url)
+        self.assert200(response)

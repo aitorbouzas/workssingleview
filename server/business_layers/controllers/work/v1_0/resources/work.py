@@ -1,13 +1,13 @@
 import csv
 from io import StringIO
 
-from flask import abort, request
+from flask import abort, request, make_response
 from flask_restx import Resource
 
 from server.business_layers.controllers.work.v1_0.api_work_controller import work_x_api
 from server.business_layers.controllers.work.v1_0.models.work import work_model, work_provider_model, work_post_model, work_provider_post_model, upload_model
 from server.business_layers.injection import work_repo, provider_repo
-from server.business_layers.use_cases.work import GetWork, PostWork
+from server.business_layers.use_cases.work import GetWork, PostWork, GetWorksCSV
 
 namespace = work_x_api.namespace('work')
 namespace.add_model(work_model.name, work_model)
@@ -40,6 +40,26 @@ class WorkObjectController(Resource):
             abort(404)
 
         return [w.to_dict() for w in works]
+
+
+@namespace.route('/<string:iswcs>/csv')
+@namespace.response(404, 'notfound')
+class WorkObjectCSVController(Resource):
+
+    @classmethod
+    def get(cls, iswcs):
+        get_work_use_case = GetWork(work_repo, iswcs.split(';'))
+        works = get_work_use_case.execute()
+
+        if not works:
+            abort(404)
+
+        works_csv_use_case = GetWorksCSV(works)
+        data = works_csv_use_case.execute()
+
+        resp = make_response(data)
+        resp.headers['content-type'] = 'application/octect-stream'
+        return resp
 
 
 @namespace.route('/upload')

@@ -20,6 +20,28 @@ class GetWork:
         return works
 
 
+class GetWorksCSV:
+
+    def __init__(self, works):
+        self.works = works
+
+    def execute(self):
+        headers = list(self.works[0].to_dict().keys())
+        data = [','.join(headers)]
+        for w in self.works:
+            row_data = w.to_dict()
+
+            providers = row_data.get('providers', [])
+            if providers:
+                del row_data['providers']
+
+            core = [str(row_data[h]) for h in headers if row_data.get(h)]
+
+            for p in providers:
+                data.append(','.join(core + [f'{str(p.get("provider_name"))}|{str(p.get("provider_reference"))}']))
+        return '\n'.join(data)
+
+
 class PostWork:
     """
     PostWork will take into account if the work exists or not, in case it does it will call UpdateWork
