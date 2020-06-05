@@ -87,7 +87,7 @@ class UpdateWork:
                 # Check Levenshtein distance with all of them, stick to the longer in case they match
                 changed = False
                 for i, m in enumerate(contributors):
-                    if fuzz.token_sort_ratio(c, m) >= LEV_RATIO or fuzz.partial_ratio(c, m) >= LEV_RATIO:
+                    if fuzz.token_sort_ratio(c, m) >= LEV_RATIO or fuzz.partial_token_sort_ratio(c, m) >= LEV_RATIO:
                         contributors[i] = c if len(c) > len(m) else m
                         changed = True
                         break

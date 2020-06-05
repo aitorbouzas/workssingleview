@@ -4,7 +4,7 @@ from server.business_layers.models import WorkModel, WorkProviderModel, Provider
 from server.business_layers.repositories.provider_alchemy_repository import ProviderAlchemyRepository
 from server.business_layers.repositories.work_alchemy_repository import WorkAlchemyRepository
 from server.business_layers.use_cases.work import PostWork
-from tests.fixtures.json_collection import test_work
+from tests.fixtures.json_collection import test_work_post
 
 
 def populate():
@@ -15,6 +15,7 @@ def populate():
     provider_repo = ProviderAlchemyRepository(provider_model)
     work_repo = WorkAlchemyRepository(work_model, work_provider_model, provider_model)
 
-    new_work = copy.deepcopy(test_work)
+    new_work = copy.deepcopy(test_work_post)
     post_work = PostWork(work_repo, provider_repo, new_work)
     post_work.execute()
+    persistence.commit()
