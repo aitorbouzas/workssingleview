@@ -36,6 +36,7 @@ pytest-metadata==1.9.0    # via pytest-html
 pytest==5.4.3             # via -r requirements.in, pytest-cov, pytest-html, pytest-metadata
 python-dateutil==2.8.1    # via alembic
 python-editor==1.0.4      # via alembic
+python-levenshtein==0.12.0  # via -r requirements.in
 pytz==2020.1              # via flask-restx
 six==1.15.0               # via flask-cors, flask-restx, jsonschema, packaging, pyrsistent, python-dateutil, sqlalchemy-utils
 sqlalchemy-utils==0.36.6  # via -r requirements.in

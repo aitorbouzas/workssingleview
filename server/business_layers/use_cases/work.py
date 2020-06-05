@@ -46,12 +46,12 @@ class PostWork:
 
                 work_provider_dict = {
                     'provider_id': provider.id,
-                    'provider_name': provider.name,
                     'work_id': work.id,
                     'provider_reference': p.get('id'),
                 }
-                provider = self.work_repo.add_provider(work_provider_dict)
-                work.add_provider(provider)
+                new_provider = self.work_repo.add_provider(work_provider_dict)
+                new_provider['provider_name'] = provider.name
+                work.add_provider(new_provider)
         else:
             update_work = UpdateWork(work.id, self.work_repo, self.provider_repo, self.data_dict)
             work = update_work.execute()

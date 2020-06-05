@@ -1,5 +1,6 @@
 from server.business_layers.domains.work import Work
 from server.business_layers.repositories.abstract_base_repository import AbstractBaseRepository
+from server.business_layers.repositories.provider_alchemy_repository import ProviderAlchemyRepository
 
 
 class WorkAlchemyRepository(AbstractBaseRepository):
@@ -14,6 +15,13 @@ class WorkAlchemyRepository(AbstractBaseRepository):
         search_result = []
         for w in works:
             values = w.to_dict(relations=True)
+
+            # Get providers name so that the domain initializes correctly
+            provider_repo = ProviderAlchemyRepository(self.provider_model)
+            for p in values.get('providers'):
+                provider = provider_repo.first({'id': p.get('provider_id')})
+                p['provider_name'] = provider.name
+
             search_result.append(Work.from_dict(values))
         return search_result
 

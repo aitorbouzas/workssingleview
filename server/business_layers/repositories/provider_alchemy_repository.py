@@ -9,7 +9,9 @@ class ProviderAlchemyRepository(AbstractBaseRepository):
         raise NotImplementedError
 
     def first(self, filters):
-        raise NotImplementedError
+        search = self.search(filters)
+
+        return search[0] if search else None
 
     def update(self, id, data):
         raise NotImplementedError

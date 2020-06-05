@@ -7,6 +7,7 @@ from server.core import db
 
 class WorkModel(BaseModel):
     __tablename__ = 'work'
+    __table_args__ = {'schema': 'public'}
 
     iswc = db.Column(db.String(32), index=True)
     title = db.Column(db.String(128))

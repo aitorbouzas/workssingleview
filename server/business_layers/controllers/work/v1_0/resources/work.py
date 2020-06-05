@@ -1,7 +1,5 @@
-import datetime
-
-from flask import abort, current_app, g
-from flask_restx import Resource, marshal
+from flask import abort
+from flask_restx import Resource
 
 from server.business_layers.controllers.work.v1_0.api_work_controller import work_x_api
 from server.business_layers.controllers.work.v1_0.models.work import work_model, provider_model

@@ -12,12 +12,12 @@ class TestWorkUseCase(unittest.TestCase):
         self.new_test_work = copy.deepcopy(test_work)
 
         self.work_repo = mock.Mock()
-        self.work_repo.create = mock.MagicMock(return_value=Work.from_dict(test_work))
+        self.work_repo.create = mock.MagicMock(return_value=Work.from_dict(self.new_test_work))
         self.work_repo.delete = mock.MagicMock(return_value=True)
-        self.work_repo.search = mock.MagicMock(return_value=[Work.from_dict(test_work)])
+        self.work_repo.search = mock.MagicMock(return_value=[Work.from_dict(self.new_test_work)])
         self.work_repo.add_provider = mock.MagicMock(return_value=test_work_provider)
-        self.work_repo.first = mock.MagicMock(return_value=Work.from_dict(test_work))
-        self.work_repo.update = mock.MagicMock(return_value=Work.from_dict(test_work))
+        self.work_repo.first = mock.MagicMock(return_value=Work.from_dict(self.new_test_work))
+        self.work_repo.update = mock.MagicMock(return_value=Work.from_dict(self.new_test_work))
 
         provider_object = mock.Mock()
         provider_object.id = 1
@@ -25,7 +25,7 @@ class TestWorkUseCase(unittest.TestCase):
 
         self.provider_repo = mock.Mock()
         self.provider_repo.search = mock.MagicMock(return_value=[provider_object])
-        self.provider_repo.first = mock.MagicMock(return_value=None)
+        self.provider_repo.first = mock.MagicMock(return_value=provider_object)
         self.provider_repo.create = mock.MagicMock(return_value=provider_object)
 
     def test_get_work(self):

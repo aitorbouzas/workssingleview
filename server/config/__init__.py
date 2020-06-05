@@ -12,7 +12,8 @@ def init_app(app, testing=False):
     file_config = import_string(f'server.config.{ENVIRONMENT.lower()}')
 
     app.debug = file_config.DEBUG
-    app.config["SQLALCHEMY_DATABASE_URI"] = file_config.DB_URI if not testing else file_config.TEST_DB_URI
+    app.config['SQLALCHEMY_DATABASE_URI'] = file_config.DB_URI if not testing else file_config.TEST_DB_URI
     app.config[
-        "SQLALCHEMY_TRACK_MODIFICATIONS"
+        'SQLALCHEMY_TRACK_MODIFICATIONS'
         ] = file_config.SQLALCHEMY_TRACK_MODIFICATIONS
+    app.config['CACHE_TYPE'] = 'simple'

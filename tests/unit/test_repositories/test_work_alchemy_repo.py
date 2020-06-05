@@ -20,8 +20,13 @@ class TestWorkAlchemyRepo(unittest.TestCase):
         self.work_model.first = mock.MagicMock(return_value=test_work)
         self.work_model.get = mock.MagicMock(return_value=test_work_object)
 
+        provider_object = mock.Mock()
+        provider_object.id = 1
+        provider_object.name = 'Warner'
+
         self.provider_model = mock.MagicMock()
-        self.provider_model.get = mock.MagicMock(return_value=None)
+        self.provider_model.get = mock.MagicMock(return_value=provider_object)
+        self.provider_model.search = mock.MagicMock(return_value=[provider_object])
 
         self.work_provider_model = mock.MagicMock()
         self.work_provider_model.create = mock.MagicMock(return_value=test_work_provider)

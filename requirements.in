@@ -10,4 +10,5 @@ psycopg2
 pytest
 pytest-cov
 pytest-html
+python-Levenshtein
 sqlalchemy-utils
